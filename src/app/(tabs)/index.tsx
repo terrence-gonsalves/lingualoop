@@ -6,7 +6,8 @@ import {
   StyleSheet, 
   Dimensions,
   Pressable, 
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import { 
   Card, 
@@ -15,6 +16,8 @@ import {
   Divider 
 } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { Ionicons } from '@expo/vector-icons';
 // import { Colors } from '@/src/constants/Colors';
@@ -43,17 +46,30 @@ const DashboardScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <View>
-            <View style={styles.headerWrapper}>
-              <View>
-                <Text style={styles.boldText}>Current language</Text>
-                <Text>Spanish</Text>
+            <View style={styles.headerContainer}>
+              <View style={styles.headerWrapper}>
+                <View style={styles.headerIcon}>
+                  <Pressable hitSlop={20}>
+                    <Avatar width={50} />
+                  </Pressable>
+                </View>
+
+                <View style={styles.flagIcon}>
+                  <Pressable hitSlop={20}>
+                    <Image source={require('@/assets/images/Spain.png')} style={{width: 30, height: 30}} />
+                  </Pressable>
+                </View>
+
+                <View style={styles.notificationBell}>
+                  <Pressable hitSlop={20}>
+                    <AntDesign name="notification" size={25} color="black" />
+                  </Pressable>
+                </View>
               </View>
-              <Pressable hitSlop={20}>
-                <Avatar width={75} />
-              </Pressable>
             </View>
             <View style={styles.nameTextWrapper}>
-              <Text style={styles.nameText}>Hi Terrence!</Text>
+              <Text style={styles.nameText}>Hello, Terrence</Text>
+              <Text>Let's do something amazing today!</Text>
             </View>
           </View>
 
@@ -106,34 +122,42 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-    titleContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
-    },
-    stepContainer: {
-      gap: 8,
-      marginBottom: 8,
-    },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+  },
 
-    contentContainer: {
-      padding: 15,
+  contentContainer: {
+    padding: 15,
   },
   contentLanguageContainer: {
-      padding: 15,
-      flex: 1,
+    padding: 15,
+    flex: 1,
   },
+  headerContainer: {},
   headerWrapper: {
-      flex: 1, 
-      justifyContent: 'space-between', 
-      flexDirection: 'row', 
-      height: 100
+    flexDirection: 'row', 
+    alignContent: 'space-between',
+    marginBottom: 10,
+  },
+  headerIcon: {
+    flex: 4
+  },
+  notificationBell: {
+    flex: 0
+  },
+  flagIcon: {
+    flex: .6
   },
   boldText: {
       fontWeight: 'bold',
   },
-  nameTextWrapper: {
-      paddingLeft: 25, 
+  nameTextWrapper: { 
       marginBottom: 15
   },
   nameText: {
