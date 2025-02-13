@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { 
   View, 
   Text, 
@@ -42,79 +43,84 @@ const DashboardScreen = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.wrapper}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.contentContainer}>
-          <View>
-            <View style={styles.headerContainer}>
-              <View style={styles.headerWrapper}>
-                <View style={styles.headerIcon}>
-                  <Pressable hitSlop={20}>
-                    <Avatar width={50} />
-                  </Pressable>
-                </View>
+    <>
+      <StatusBar backgroundColor="#324755" style="light" />
+      <SafeAreaView style={styles.wrapper}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.headerContainer}>
+            <View style={styles.headerWrapper}>
+              <View style={styles.headerIcon}>
+                <Pressable hitSlop={20}>
+                  <Avatar width={50} borderWidth={1} borderColour='#F0F3F4' />
+                </Pressable>
+              </View>
 
-                <View style={styles.flagIcon}>
-                  <Pressable hitSlop={20}>
-                    <Image source={require('@/assets/images/Spain.png')} style={{width: 30, height: 30}} />
-                  </Pressable>
-                </View>
+              <View style={styles.flagIcon}>
+                <Pressable hitSlop={20}>
+                  <Image source={require('@/assets/images/Spain.png')} style={styles.imageIcon} />
+                </Pressable>
+              </View>
 
-                <View style={styles.notificationBell}>
-                  <Pressable hitSlop={20}>
-                    <AntDesign name="notification" size={25} color="black" />
-                  </Pressable>
-                </View>
+              <View style={styles.notificationBell}>
+                <Pressable hitSlop={20}>
+                  <AntDesign name="notification" size={25} color="#F0F3F4" />
+                </Pressable>
               </View>
             </View>
-            <View style={styles.nameTextWrapper}>
+
+            <View>
               <Text style={styles.nameText}>Hello, Terrence</Text>
-              <Text>Let's do something amazing today!</Text>
+              <Text style={styles.titleText}>Let's do something amazing today!</Text>
             </View>
           </View>
+            
+          <View style={styles.languageSummaryWrapper}>
+            <Text style={styles.dailyGoalText}>Language Summary</Text>
 
-          <View>
-            <View style={styles.dailyGoalWrapper}>
-              <Text style={styles.dailyGoalText}>Daily Goal</Text>
-              <View style={styles.dailyGoalTracker}>
-                <Text>0/60 min(s)</Text>
+            <View>
+              <Text>This is the wrapper for the language summary</Text>
+              <View>
+                <Text>This is one language</Text>
+              </View>
+              <View>
+                <Text>This is another language</Text>
               </View>
             </View>
+          </View>
+
+        <View style={styles.languagesOverview}>
+          <Text style={styles.sectionTitle}>Your Languages</Text>
+
+          {languages.map((lang, index) => (
+            <View key={index} style={styles.languageItem}>
+              <Text style={styles.languageName}>{lang.name}</Text>
+              <Text>Total time: {lang.totalHours} min</Text>
+              <Text>Streak: {lang.streak} days</Text>
+            </View>
+          ))}
+
         </View>
-      </View>
 
-      <View style={styles.languagesOverview}>
-        <Text style={styles.sectionTitle}>Your Languages</Text>
+        <Surface style={styles.recentActivities}>
+          <Text style={styles.sectionTitle}>Recent Activities</Text>
 
-        {languages.map((lang, index) => (
-          <View key={index} style={styles.languageItem}>
-            <Text style={styles.languageName}>{lang.name}</Text>
-            <Text>Total time: {lang.totalHours} min</Text>
-            <Text>Streak: {lang.streak} days</Text>
-          </View>
-        ))}
+          {recentActivities.map((activity, index) => (
+            <View key={index} style={styles.activityItem}>
+              <Text>{activity.language}: {activity.type}</Text>
+              <Text>{activity.duration} min</Text>
+            </View>
+          ))}
 
-      </View>
+        </Surface>
 
-      <Surface style={styles.recentActivities}>
-        <Text style={styles.sectionTitle}>Recent Activities</Text>
-
-        {recentActivities.map((activity, index) => (
-          <View key={index} style={styles.activityItem}>
-            <Text>{activity.language}: {activity.type}</Text>
-            <Text>{activity.duration} min</Text>
-          </View>
-        ))}
-
-      </Surface>
-
-        {/* Start Tracking Button */}
-        <TouchableOpacity style={styles.startButton}>
-          <Ionicons name="play-circle" size={24} color="white" />
-          <Text style={styles.startButtonText}>Start New Session</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+          {/* Start Tracking Button */}
+          <TouchableOpacity style={styles.startButton}>
+            <Ionicons name="play-circle" size={24} color="white" />
+            <Text style={styles.startButtonText}>Start New Session</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 
@@ -131,19 +137,22 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
   },
-
-  contentContainer: {
-    padding: 15,
-  },
   contentLanguageContainer: {
     padding: 15,
     flex: 1,
   },
-  headerContainer: {},
+  headerContainer: {
+    backgroundColor: '#324755',
+    padding: 15
+  },
   headerWrapper: {
     flexDirection: 'row', 
     alignContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 15,
+  },
+  imageIcon: {
+    width: 28,
+    height: 28,
   },
   headerIcon: {
     flex: 4
@@ -157,17 +166,16 @@ const styles = StyleSheet.create({
   boldText: {
       fontWeight: 'bold',
   },
-  nameTextWrapper: { 
-      marginBottom: 15
-  },
   nameText: {
       fontSize: 25, 
-      //color: Colors.light.textPrimary
+      color: '#F0F3F4'
   },
-  dailyGoalWrapper: {
+  titleText: {
+    color: '#F0F3F4'
+  },
+  languageSummaryWrapper: {
       width: '100%', 
-      padding: 20, 
-      marginBottom: 20
+      padding: 15
   },
   dailyGoalText: {
       fontSize: 18, 
